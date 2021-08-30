@@ -24,7 +24,7 @@ async def retrieve_messages(channel: discord.TextChannel):
 
 def save_message(message: discord.Message):
     # Ignore bots
-    if message.author.bot:
+    if message.author.bot or message.content.strip() == '':
         return
 
     id = str(message.id)
@@ -42,7 +42,7 @@ def save_message(message: discord.Message):
         return
 
     try:
-        file = open(os.path.join(dir, user_id, filename), 'w')
+        file = open(os.path.join(dir, user_id, filename), 'w', encoding='utf8')
         file.write(message.content)
         file.close()
     except:

@@ -9,25 +9,30 @@ test_dir = os.path.join(data_dir, cfg.get('test_dir_name'))
 msg_count = 0
 train_count = 0
 test_count = 0
-user_set = set()
+user_set_train = set()
+user_set_test = set()
 
 for folder in os.listdir(train_dir):
-    user_set.add(folder)
+    user_set_train.add(folder)
 
     for file in os.listdir(os.path.join(train_dir, folder)):
         msg_count += 1
         train_count += 1
 
 for folder in os.listdir(test_dir):
-    user_set.add(folder)
+    user_set_test.add(folder)
 
     for file in os.listdir(os.path.join(test_dir, folder)):
         msg_count += 1
         test_count += 1
 
-print('Total users:', len(user_set))
+print('Total users:', len(user_set_train))
 print('Total messages:', msg_count)
 print('Training data:', train_count, '-',
       str(int(train_count/msg_count*100)) + '%')
 print('Test data:', test_count, '-',
       str(int(test_count/msg_count*100)) + '%')
+
+if len(user_set_test) != len(user_set_train):
+    print("Warning! Training and testing data classname mismatch:",
+          len(user_set_train), len(user_set_test))
